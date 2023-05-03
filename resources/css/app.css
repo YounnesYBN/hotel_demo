@@ -54,3 +54,13 @@
     isolation: isolate;
   }
   
+.img-gallery-hover:hover{
+  transform: translateY(-5px);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+.rooms-hover{
+  transform: translateZ(-5px);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

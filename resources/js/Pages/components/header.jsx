@@ -23,6 +23,7 @@ export default function Header({selected}) {
                 height: "fit-content",
                 position : "fixed",
                 top:"0",
+                zIndex : 2,
                 backgroundColor : "white"
             }
         } >
