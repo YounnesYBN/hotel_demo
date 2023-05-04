@@ -64,3 +64,15 @@
   transform: translateZ(-5px);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.breakText{
+  min-height: fit-content;
+  max-height: 80px;
+  width: 296px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4; /* start showing ellipsis when 3rd line is reached */
+  white-space: pre-wrap; /* let the text wrap preserving spaces */
+  color: rgba(28,28,28,.7);
+}

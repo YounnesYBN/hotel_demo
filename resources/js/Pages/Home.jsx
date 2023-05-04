@@ -7,7 +7,11 @@ import { Close } from "@mui/icons-material";
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import MapRoundedIcon from '@mui/icons-material/MapRounded';
 import AttachEmailRoundedIcon from '@mui/icons-material/AttachEmailRounded';
-import GoogleMapReact from 'google-map-react';
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import LocalHotelRoundedIcon from '@mui/icons-material/LocalHotelRounded';
+import "leaflet/dist/leaflet.css";
+import Footer from "./components/footer";
+import { Link } from "@inertiajs/react";
 
 
 const SpliteArray = (x) => {
@@ -20,7 +24,7 @@ const SpliteArray = (x) => {
     return result;
 }
 
-export default function Home({ imgs, galeries }) {
+export default function Home({ imgs, galeries, rooms }) {
     const [value, setValue] = useState(0);
     const [valueGallery, setValueGallery] = useState(0);
     const [imgBackDrop, setImgBackDrop] = useState(false);
@@ -54,7 +58,7 @@ export default function Home({ imgs, galeries }) {
 
     }
 
-    const handleChange = (event, newValue) => {
+    const handleChange = (event, newValue, rooms) => {
         setValue(newValue);
     };
     const handleChangeGallery = (event, newValue) => {
@@ -68,7 +72,7 @@ export default function Home({ imgs, galeries }) {
         setSelectedImg(null);
         setImgBackDrop(false);
     }
-    
+
     return (
         <div>
             <Header selected={"HOME"} />
@@ -86,8 +90,8 @@ export default function Home({ imgs, galeries }) {
 
                         <Carousel fill={x} >
                             {
-                                imgs.map(img => {
-                                    return <Image fit="cover" src={img} />
+                                imgs.map((img, index) => {
+                                    return <Image key={index} fit="cover" src={img} />
 
                                 })
                             }
@@ -155,7 +159,9 @@ export default function Home({ imgs, galeries }) {
                         <Typography variant={IsPhone ? "h5" : "h3"}>
                             Rooms
                         </Typography>
-                        <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        <Link href="/Rooms">
+                            <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        </Link>
                     </div>
                     <Tabs
                         indicatorColor="transparent "
@@ -170,79 +176,34 @@ export default function Home({ imgs, galeries }) {
                             }
                         }
                     >
-                        <Tab label={(
-                            // all cards------------------------------------------------------------------------------------
-                            <Card className="rooms-hover" sx={{ padding: "0px", transition: "350ms" }}>
-                                <CardMedia
-                                    component={"img"}
+                        {
+                            rooms.map((room, index) => {
+                                return (
+                                    <Tab key={index} label={(
+                                        <Card>
+                                            <CardMedia
+                                                component={"img"}
+                                                image={room.selected_image}
+                                                width={328}
+                                                height={218}
+                                            />
+                                            <CardContent sx={{ height: "180px" }}>
+                                                <Typography gutterBottom variant="h6" component="div">
+                                                    {room.title}
+                                                </Typography>
+                                                <p className="breakText">
+                                                    {room.discreption}
+                                                </p>
+                                            </CardContent>
+                                        </Card>
+                                    )} />
+                                )
+                            })
+                        }
 
-                                    image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        One Bedroom Cabin 1
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                                        species, ranging across all continents except Antarctica
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        )} />
-                        <Tab label={(
-                            <Card>
-                                <CardMedia
-                                    component={"img"}
 
-                                    image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        One Bedroom Cabin 1
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                                        species, ranging across all continents except Antarctica
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        )} />
-                        <Tab label={(
-                            <Card>
-                                <CardMedia
-                                    component={"img"}
 
-                                    image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        One Bedroom Cabin 1
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                                        species, ranging across all continents except Antarctica
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        )} />
-                        <Tab label={(
-                            <Card>
-                                <CardMedia
-                                    component={"img"}
 
-                                    image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        One Bedroom Cabin 1
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                                        species, ranging across all continents except Antarctica
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        )} />
 
 
                     </Tabs>
@@ -272,7 +233,10 @@ export default function Home({ imgs, galeries }) {
                         <Typography variant={IsPhone ? "h5" : "h3"}>
                             About Us
                         </Typography>
-                        <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        <Link href="/About us">
+
+                            <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        </Link>
                     </div>
                     <div style={
                         {
@@ -316,7 +280,9 @@ export default function Home({ imgs, galeries }) {
                         <Typography variant={IsPhone ? "h5" : "h3"}>
                             Gallery
                         </Typography>
-                        <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        <Link href="/Gallery">
+                            <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        </Link>
                     </div>
                     <div style={
                         {
@@ -366,7 +332,7 @@ export default function Home({ imgs, galeries }) {
                                                         minArray.map((galery, index2) => {
                                                             return (
 
-                                                                <img fit="cover" onClick={() => {
+                                                                <img fit="cover" key={galery} onClick={() => {
                                                                     openBackDrop(galery)
                                                                 }} src={galery} width="300px" height="140px" className="img-gallery-hover" style={{ objectFit: "cover", borderRadius: "5px", alignSelf: "center", transition: "350ms" }} />
 
@@ -385,7 +351,7 @@ export default function Home({ imgs, galeries }) {
                             )
                             :
                             galeries.map((galery) => {
-                                return <img fit="cover" src={galery} onClick={() => {
+                                return <img fit="cover" key={galery} src={galery} onClick={() => {
                                     openBackDrop(galery)
                                 }} width="300px" height="140px" className="img-gallery-hover" style={{ objectFit: "cover", borderRadius: "5px", alignSelf: "center", transition: "350ms" }} />
                             })
@@ -400,8 +366,8 @@ export default function Home({ imgs, galeries }) {
                     flexDirection: "column",
                     alignItems: "center",
                     marginTop: "20px",
-                    padding: IsPhone ? "20px" : null
-
+                    padding: IsPhone ? "20px" : null,
+                    paddingBottom: 20
                 }}>
                     <div style={
                         {
@@ -417,7 +383,9 @@ export default function Home({ imgs, galeries }) {
                         <Typography variant={IsPhone ? "h5" : "h4"}>
                             We Would Love To Hear From You
                         </Typography>
-                        <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        <Link href="/Contact us" >
+                            <Button sx={{ height: "fit-content", "&:hover": { textDecoration: "underline" } }} endIcon={<TrendingFlatRoundedIcon />}>see all</Button>
+                        </Link>
                     </div>
                     <div style={
                         {
@@ -443,13 +411,13 @@ export default function Home({ imgs, galeries }) {
                                 <div>
                                     {/* info phone */}
                                     <h4 style={{ color: "#606060", fontWeight: "normal" }}>Telephone Number</h4>
-                                    <span style={{ color: "black" }}>0612345789</span>
+                                    <span style={{ color: "black" }}>0666-025512</span>
                                 </div>
-                                <a href="#">
-                                    <IconButton>
-                                        <LocalPhoneRoundedIcon sx={{ color: "#06D6A0" }} fontSize="large" />
-                                    </IconButton>
-                                </a>
+
+                                <IconButton>
+                                    <LocalPhoneRoundedIcon sx={{ color: "#06D6A0" }} fontSize="large" />
+                                </IconButton>
+
                             </div>
                             <Divider variant="middle" />
                             <div style={{ ...contactChildrens, }}>
@@ -459,44 +427,59 @@ export default function Home({ imgs, galeries }) {
                                     <span style={{ color: "black" }}>
                                         Talat N'Yaaqoub Ijoukak, 42155 Ijjoukak, Morocco</span>
                                 </div>
-                                <a href="#">
-                                    <IconButton>
-                                        <MapRoundedIcon sx={{ color: "#06D6A0" }} fontSize="large" />
-                                    </IconButton>
-                                </a>
+
+                                <IconButton>
+                                    <MapRoundedIcon sx={{ color: "#06D6A0" }} fontSize="large" />
+                                </IconButton>
+
                             </div>
                             <Divider variant="middle" />
                             <div style={{ ...contactChildrens, }}>
                                 <div>
                                     {/* info email */}
                                     <h4 style={{ color: "#606060", fontWeight: "normal" }}>Email</h4>
-                                    <span style={{ color: "black" }}>ChezImnir@gmail.com</span>
+                                    <span style={{ color: "black" }}>chezimnir@gmail.com</span>
                                 </div>
-                                <a href="#">
-                                    <IconButton>
-                                        <AttachEmailRoundedIcon sx={{ color: "#06D6A0" }} fontSize="large" />
-                                    </IconButton>
-                                </a>
+
+                                <IconButton>
+                                    <AttachEmailRoundedIcon sx={{ color: "#06D6A0" }} fontSize="large" />
+                                </IconButton>
+
                             </div>
                         </div>
                         <div style={{
-                            height: "300px",
+                            height: 300,
                             width: ContactBreakingPoint ? "100%" : "60%",
                         }}>
+
                             {/* // map  */}
-                            
+                            <MapContainer style={{ width: "100%", height: 300, zIndex: 1 }} center={[30.987464054535906, -8.182425564904193]} zoom={15} scrollWheelZoom={false}>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <Marker position={[30.987464054535906, -8.182425564904193]}>
+                                    <Popup>
+                                        <div style={{ display: "flex" }}>
+                                            CHEZ IMNIR
+                                            <LocalHotelRoundedIcon color="primary" />
+                                        </div>
+                                    </Popup>
+                                </Marker>
+                            </MapContainer>
 
                         </div>
                     </div>
                 </div>
-            </section>
-
+            </section >
+            {/* // footer ------------------------------------------------------- */}
+            < Footer isSmall={x} />
 
             {/* ---------------------------------------------------uneffect code -----------------------------------*/}
-            <Backdrop
+            < Backdrop
                 open={imgBackDrop}
-                // onClick={}
-                sx={{ zIndex: 20, display: "flex", flexDirection: "column", padding: "5%" }}
+                sx={{ zIndex: 20, display: "flex", flexDirection: "column", padding: "5%" }
+                }
                 onClick={() => closeBackDrop()}
             >
                 <div style={{ width: "100%", display: "flex", justifyContent: "flex-end", paddingRight: "1%" }}>
@@ -506,7 +489,7 @@ export default function Home({ imgs, galeries }) {
 
                 <img src={selectedImg} alt="" onClick={(e) => e.stopPropagation()} style={{ objectFit: "cover", borderRadius: "5px", alignSelf: "center", minWidth: "70%", maxWidth: "100%", maxHeight: "600px", minHeight: "fit-content" }} />
 
-            </Backdrop>
+            </Backdrop >
         </div >
     )
 }
