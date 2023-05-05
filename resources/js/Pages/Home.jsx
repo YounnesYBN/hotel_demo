@@ -453,7 +453,7 @@ export default function Home({ imgs, galeries, rooms }) {
                         }}>
 
                             {/* // map  */}
-                            <MapContainer style={{ width: "100%", height: 300, zIndex: 1 }} center={[30.987464054535906, -8.182425564904193]} zoom={15} scrollWheelZoom={false}>
+                            <MapContainer style={{ width: "100%", height: 300, zIndex: 1 }} center={[30.987464054535906, -8.182425564904193]} zoom={15} scrollWheelZoom={true}>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

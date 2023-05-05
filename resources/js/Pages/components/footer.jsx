@@ -4,13 +4,13 @@ import AttachEmailRoundedIcon from '@mui/icons-material/AttachEmailRounded';
 import FacebookSVG from "../../icons/facebookSVG.jsx"
 import BookingSVG from '../../icons/bookingSVG.jsx';
 import { Divider, Tooltip } from '@mui/material';
-export default function Footer({ isSmall }) {
+export default function Footer({ isSmall ,disactivatMargin}) {
 
     return (
         <footer style={{
             width: "100%",
             height: "fit-content",
-            marginTop: "30px",
+            marginTop: disactivatMargin?"0px":"30px",
             background: "#232e39"
         }}>
             <div style={{ maxHeight: "fit-content", minHeight: !isSmall ? "fit-content" : "201px", display: !isSmall ? null : "flex", width: "100%", justifyContent: !isSmall ? null : "space-around" }}>

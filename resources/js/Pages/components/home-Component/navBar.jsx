@@ -1,17 +1,18 @@
 import { Link } from "@inertiajs/react"
-import { Typography } from "@mui/material"
+import { Close } from "@mui/icons-material"
+import { IconButton, Typography } from "@mui/material"
 
-export default function NavBar({ selected, isSmall }) {
+export default function NavBar({ selected, isSmall,CloseDrawer }) {
 
     const Hover = { "&:hover": { color: "#06D6A0" } }
     const OnSelect = "5px solid #06D6A0"
-
+    // const IsPhone = useMediaQuery('(max-width:767px)');
 
 
     if (!isSmall) {
 
         return (
-            <div style={
+            <div  style={
                 {
                     padding: "10px 0 0 0",
                     width: "100%",
@@ -44,6 +45,8 @@ export default function NavBar({ selected, isSmall }) {
                     
                 }
             }>
+                
+                <div style={{width:"100%",display:"flex",justifyContent:"end",paddingRight:"20px"}}><IconButton onClick={()=>CloseDrawer(false)} ><Close  /></IconButton></div>
                 <Link href="/" style={{textDecoration:"none",color:"black"}}><Typography 
                 variant="h6" 
                 sx={{ ...Hover, borderBottom: "HOME" == selected ? OnSelect : "none", color: "HOME" == selected ? "#06D6A0" : "none" }}>HOME</Typography></Link>

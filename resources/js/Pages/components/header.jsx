@@ -3,11 +3,12 @@ import { useState } from "react";
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import NavBar from "./home-Component/navBar";
 
-export default function Header({selected}) {
-    
+export default function Header({ selected }) {
+
     const [anchorEl, setAnchorEl] = useState(null);
-    const [openSidBar,setOpenSideBar] = useState(false);
-    const IsPhone = useMediaQuery('(max-width:600px)');
+    const [openSidBar, setOpenSideBar] = useState(false);
+    const IsPhone = useMediaQuery('(max-width:767px)');
+    // const IsPhone = useMediaQuery('(max-width:600px)');
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -21,10 +22,10 @@ export default function Header({selected}) {
             {
                 width: "100%",
                 height: "fit-content",
-                position : "fixed",
-                top:"0",
-                zIndex : 2,
-                backgroundColor : "white"
+                position: "fixed",
+                top: "0",
+                zIndex: 2,
+                backgroundColor: "white"
             }
         } >
             {/* parent one  */}
@@ -44,10 +45,10 @@ export default function Header({selected}) {
                 {/* chiled one  */}
                 {
                     IsPhone ? (
-                        <div style={{ display: "flex", alignItems: "center",gap:"5px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
 
-                            <IconButton onClick={()=>{setOpenSideBar(true)}}>
-                                <MenuRoundedIcon fontSize="large"/>
+                            <IconButton onClick={() => { setOpenSideBar(true) }}>
+                                <MenuRoundedIcon fontSize="large" />
                             </IconButton>
                             <h3 style={
                                 {
@@ -98,9 +99,20 @@ export default function Header({selected}) {
                         aria-expanded={open ? 'true' : undefined}
 
                     >
-                        <h3 style={{ fontWeight: "bold" }} >Connect</h3>
+                        {
+                            IsPhone
+                                ? <h4 style={{ fontWeight: "normal" }} >Connect</h4>
+                                : <h3 style={{ fontWeight: "bold" }} >Connect</h3>
+                        }
                     </Button>
-                    <Button sx={{ backgroundColor: "#06D6A0", "&:hover": { backgroundColor: "#00F5D4" } }} variant="contained"><h3 style={{ fontWeight: "bold" }}>Book now !</h3 ></Button>
+                    <Button sx={{ backgroundColor: "#06D6A0", "&:hover": { backgroundColor: "#00F5D4" } }} variant="contained">
+
+                        {
+                            IsPhone
+                                ? <h4 style={{ fontWeight: "normal" }} >Book now !</h4>
+                                : <h3 style={{ fontWeight: "bold" }} >Book now !</h3>
+                        }
+                    </Button>
 
                     <Menu
                         sx={{ marginTop: "10px" }}
@@ -123,10 +135,10 @@ export default function Header({selected}) {
             {
                 IsPhone ? (
                     <Drawer
-                        open = {openSidBar}
-                        onClose={()=>{setOpenSideBar(false)}}
+                        open={openSidBar}
+                        onClose={() => { setOpenSideBar(false) }}
                     >
-                        <NavBar isSmall={IsPhone} selected={selected} />
+                        <NavBar isSmall={IsPhone} selected={selected} CloseDrawer={setOpenSideBar} />
 
                     </Drawer>
                 ) : (
