@@ -47,6 +47,8 @@ Route::get('/', function () {
     ]);
 });
 
+
+
 Route::get('/About us', function () {
     return Inertia::render("AboutUs");
 });
@@ -60,5 +62,12 @@ Route::get('/Contact us', function () {
 });
 
 Route::get('/Gallery', function () {
-    return Inertia::render("Gallery");
+    $allGallery = File::allFiles("storage/gallery");
+    $allGalleryURL = array_map(function($image){
+        return asset("storage/gallery/".$image->getFileName());
+    },$allGallery); 
+    
+    return Inertia::render("Gallery",[
+        "AllGalleriesProps" => $allGalleryURL
+    ]);
 });
