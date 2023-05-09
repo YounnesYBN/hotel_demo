@@ -1,17 +1,23 @@
-import { Button, Drawer, IconButton, useMediaQuery,Avatar } from "@mui/material";
+import { Button, Drawer, IconButton, useMediaQuery, Avatar, Menu, MenuItem, Typography, Box, Divider } from "@mui/material";
 import { useState } from "react";
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import NavBar from "./home-Component/navBar";
 import { Link, usePage } from "@inertiajs/react";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 export default function Header({ selected }) {
 
     const [openSidBar, setOpenSideBar] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openMenu, setOpenMenu] = useState(false);
     const IsPhone = useMediaQuery('(max-width:767px)');
     const { user } = usePage().props.Auth
+    const handleClose = () => {
+        setAnchorEl(null);
+        setOpenMenu(false)
+    };
 
-    console.log(user)
     return (
         <div style={
             {
@@ -86,18 +92,55 @@ export default function Header({ selected }) {
                     }
                 }>
                     {
-                        user.email?<IconButton><Avatar >{user.username[0]+user.username[1]}</Avatar></IconButton>:
-                        <Button
-                            variant="text"
-                        >
-                            <Link href="/Connect" style={{ textDecoration: "none", color: "#2196f3" }}>
-                                {
-                                    IsPhone
-                                        ? <h4 style={{ fontWeight: "normal" }} >Connect</h4>
-                                        : <h3 style={{ fontWeight: "bold" }} >Connect</h3>
-                                }
-                            </Link>
-                        </Button>
+                        user.email
+                            ?   //on login
+                            <>
+                                <IconButton onClick={(e) => {
+                                    setAnchorEl(e.currentTarget)
+                                    setOpenMenu(true)
+                                }}>
+                                    <Avatar />
+                                </IconButton>
+                                {/* //--------------------------unifective code */}
+                                <Menu
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={openMenu}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                        'aria-labelledby': 'basic-button',
+                                    }}
+                                >
+                                    <MenuItem onClick={handleClose}>
+                                        <Box sx={{ my: 1.5, px: 2.5 }} >
+                                            <Typography variant="subtitle2" noWrap>
+                                                {user.username}
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ color: 'gray' }} noWrap>
+                                                {user.email}
+
+                                            </Typography>
+                                        </Box>
+                                    </MenuItem>
+                                    <Divider sx={{ borderStyle: 'dashed', backgroundColor: "rgb(239, 239, 244)" }} variant="middle"/>
+                                    <MenuItem sx={{display:"flex",justifyContent:"center",gap:"5%"}}>
+                                        Logout <LogoutIcon color="error"/>
+                                    </MenuItem>
+
+                                </Menu>
+                            </>
+                            : //on not login
+                            <Button
+                                variant="text"
+                            >
+                                <Link href="/Connect" style={{ textDecoration: "none", color: "#2196f3" }}>
+                                    {
+                                        IsPhone
+                                            ? <h4 style={{ fontWeight: "normal" }} >Connect</h4>
+                                            : <h3 style={{ fontWeight: "bold" }} >Connect</h3>
+                                    }
+                                </Link>
+                            </Button>
                     }
                     <Button sx={{ backgroundColor: "#06D6A0", "&:hover": { backgroundColor: "#00F5D4" } }} variant="contained">
 
@@ -126,6 +169,9 @@ export default function Header({ selected }) {
                     <NavBar isSmall={IsPhone} selected={selected} />
                 )
             }
+
+
+
 
         </div >
     )
