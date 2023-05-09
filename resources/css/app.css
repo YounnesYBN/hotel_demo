@@ -76,3 +76,22 @@
   white-space: pre-wrap; /* let the text wrap preserving spaces */
   color: rgba(28,28,28,.7);
 }
+
+.breakTextInRoomPage{
+  
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4; /* start showing ellipsis when 10rd line is reached */
+  white-space: pre-wrap; /* let the text wrap preserving spaces */
+  color: rgba(28,28,28,.7);
+}
+
+.roomCard{
+  transition: 500ms;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.roomCard:hover{
+  transform: translateY(-10px);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

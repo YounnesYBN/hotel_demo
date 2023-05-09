@@ -1,139 +1,15 @@
 
 import Header from "./components/header"
-import { Button, Divider, IconButton, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 import Footer from "./components/footer"
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import { Link } from "@inertiajs/react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import MapRoundedIcon from '@mui/icons-material/MapRounded';
-import AttachEmailRoundedIcon from '@mui/icons-material/AttachEmailRounded';
-import LocalHotelRoundedIcon from '@mui/icons-material/LocalHotelRounded';
-
 import "leaflet/dist/leaflet.css";
-import { LocalPhoneRounded } from "@mui/icons-material";
-
-const MapComponent = ({ zoom }) => {
-    return (
-        <MapContainer style={{ width: "100%", height: "100%", zIndex: 0, borderRadius: "5px" }} center={[30.987464054535906, -8.182425564904193]} zoom={zoom} scrollWheelZoom={true}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={[30.987464054535906, -8.182425564904193]}>
-                <Popup>
-                    <div style={{ display: "flex" }}>
-                        CHEZ IMNIR
-                        <LocalHotelRoundedIcon color="primary" />
-                    </div>
-                </Popup>
-            </Marker>
-        </MapContainer>
-    )
-}
-const ContactComponent = () => {
-    const IsPhone = useMediaQuery('(max-width:767px)');
-    const contactChildrens = {
-        minHeight: "33.33%",
-        maxHeight: "fit-Content",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 30px"
-
-    }
-    return (
-        <div style={
-            {
-                minHeight: "100%",
-                maxHeight: "fit-Content",
-                width: "100%",
-
-                // borderRadius: ContactBreakingPoint ? "5px 5px 0px 0px " : "5px 0 0 5px",
-            }
-        }>
-            {/* //info : phone adress email */}
-            <div style={{ ...contactChildrens, }}>
-                <div>
-                    {/* info phone */}
-                    <h4 style={{ color: "#606060", fontWeight: "normal" }}>Telephone Number</h4>
-                    <span style={{ color: "black" ,fontSize:IsPhone?"12px":null}}>0666-025512</span>
-                </div>
-
-                <IconButton>
-                    <LocalPhoneRounded sx={{ color: "#06D6A0" }} fontSize={IsPhone ? "medium":"large"} />
-                </IconButton>
-
-            </div>
-            <Divider variant="middle" />
-            <div style={{ ...contactChildrens, }}>
-                <div style={{ maxWidth: "80%" }}>
-                    {/* info adress */}
-                    <h4 style={{ color: "#606060", fontWeight: "normal" }}>Address</h4>
-                    <span style={{ color: "black" ,fontSize:IsPhone?"12px":null}}>
-                        Talat N'Yaaqoub Ijoukak, 42155 Ijjoukak, Morocco</span>
-                </div>
-
-                <IconButton>
-                    <MapRoundedIcon sx={{ color: "#06D6A0" }} fontSize={IsPhone ? "medium":"large"} />
-                </IconButton>
-
-            </div>
-            <Divider variant="middle" />
-            <div style={{ ...contactChildrens, }}>
-                <div >
-                    {/* info email */}
-                    <h4 style={{ color: "#606060", fontWeight: "normal" }}>Email</h4>
-                    <span style={{ color: "black" ,fontSize:IsPhone?"12px":null}}>chezimnir@gmail.com</span>
-                </div>
-
-                <IconButton>
-                    <AttachEmailRoundedIcon sx={{ color: "#06D6A0" }} fontSize={IsPhone ? "medium":"large"} />
-                </IconButton>
-
-            </div>
-        </div>
+import MapComponent from "./components/contactUs-Component/MapComponent";
+import ContactComponent from "./components/contactUs-Component/ContactComponent";
+import MessageComponent from "./components/contactUs-Component/MessageComponent";
 
 
-    )
-}
-const MessageComponent = () => {
-    return (
-        <div style={{
-            width: "100%",
-            minHeight: "100%",
-            maxHeight: "fit-content",
-            padding: "20px 20px 20px 20px ",
-
-        }}>
-            <Typography variant="h6" sx={{ marginBottom: "15px" }}>Send an Enquiry</Typography>
-            <div style={{ width: "100%", marginBottom: "15px" }}>
-                <TextField id="outlined-basic" label="Name" variant="outlined" sx={{ width: "100%" }} color="" />
-
-            </div>
-            <div style={{ width: "100%", marginBottom: "15px" }}>
-                <TextField id="outlined-basic" label="telephon" variant="outlined" sx={{ width: "100%" }} />
-
-            </div>
-            <div style={{ width: "100%", marginBottom: "15px" }}>
-                <TextField id="outlined-basic" label="Email" variant="outlined" sx={{ width: "100%" }} />
-
-            </div>
-
-            <div style={{ width: "100%", marginBottom: "15px" }}>
-                <TextField id="outlined-basic" label="Message" variant="outlined" sx={{ width: "100%" }}
-                    multiline={true}
-                    rows={8}
-                    maxRows={8}
-
-                />
-            </div>
-            <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-
-                <Button sx={{ width: "80%" }} variant="contained">SEND</Button>
-            </div>
-        </div>
-    )
-}
 
 
 export default function ContactUs(second) {

@@ -1,10 +1,12 @@
 <?php
 
-use App\Models\Room;
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,58 +18,18 @@ use Illuminate\Support\Facades\File;
 |
 */
 
-Route::get('/', function () {
-    //all files of gallery folder //all files of generate urls for gallery folder
-    $galleryPath = public_path("storage/gallery");
-    $allGallery =File::allFiles($galleryPath);
-    $allGalleryURL = array_map(function($gallery){
-        return asset("storage/gallery/".$gallery->getFileName());
-    },$allGallery);
-    
-    //all files of home folder //all files of generate urls for home folder
-    $homePhotoPath = public_path("storage/home");
-    $allHomePhotos = File::allFiles($homePhotoPath);
-    $allHomePhotosURL = array_map(function($gallery){
-        return asset("storage/home/".$gallery->getFileName());
-    },$allHomePhotos);
-    array_splice($allGalleryURL,10);
-
-    //get some rooms and thiere images
-    $someRooms = Room::limit(5)->get(); 
-    foreach ($someRooms as $room) {
-        $image = $room->rooms_gallery()->where("selected",true)->first();
-        $room->selected_image = asset("storage/rooms/".$image->image_name);
-    }
-    
-    return Inertia::render("Home", [
-        "imgs" => $allHomePhotosURL,
-        "galeries" => $allGalleryURL,
-        "rooms"=>$someRooms,
-
-    ]);
-});
+Route::get('/', [HomeController::class,"index"]);
 
 
 
-Route::get('/About us', function () {
-    return Inertia::render("AboutUs");
-});
+Route::get('/About us',[AboutUsController::class,"index"]);
 
-Route::get('/Rooms', function () {
-    return Inertia::render("Rooms");
-});
+Route::get('/Rooms', [RoomController::class,"index"]);
 
-Route::get('/Contact us', function () {
-    return Inertia::render("ContactUs");
-});
+Route::get('/Contact us', [ContactUsController::class,"index"]);
 
-Route::get('/Gallery', function () {
-    $allGallery = File::allFiles("storage/gallery");
-    $allGalleryURL = array_map(function($image){
-        return asset("storage/gallery/".$image->getFileName());
-    },$allGallery); 
-    
-    return Inertia::render("Gallery",[
-        "AllGalleriesProps" => $allGalleryURL
-    ]);
+Route::get('/Gallery',[GalleryController::class,"index"]);
+
+Route::get("/Connect",function(){
+    Inertia::render("Connect");
 });

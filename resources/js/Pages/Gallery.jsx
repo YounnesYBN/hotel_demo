@@ -38,7 +38,7 @@ export default function Gallery({ AllGalleriesProps }) {
                 marginTop: IsLessThen470 ? "100px" : IsPhone ? "70px" : "115px",
                 display: IsPhone ? null : "flex",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
             }}>
                 <div style={
                     {

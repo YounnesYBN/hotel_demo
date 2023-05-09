@@ -75,7 +75,7 @@ export default function Home({ imgs, galeries, rooms }) {
 
     return (
         <div>
-            <Header selected={"HOME"} />
+            <Header selected={"HOME"}/>
             {/* parent one containes picture slides */}
             <div style={{ height: "fit-content", marginTop: IsLessThen470 ? "100px" : IsPhone ? "70px" : "115px", paddingBottom: "65px", backgroundColor: "white" }}>
                 <div style={
