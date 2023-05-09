@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\ConnectController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
@@ -30,6 +31,4 @@ Route::get('/Contact us', [ContactUsController::class,"index"]);
 
 Route::get('/Gallery',[GalleryController::class,"index"]);
 
-Route::get("/Connect",function(){
-    Inertia::render("Connect");
-});
+Route::get("/Connect",[ConnectController::class,"index"]);

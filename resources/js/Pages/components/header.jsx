@@ -1,21 +1,15 @@
-import { Button, Chip, Divider, Drawer, IconButton, Menu, useMediaQuery } from "@mui/material";
+import { Button, Drawer, IconButton, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import NavBar from "./home-Component/navBar";
+import { Link } from "@inertiajs/react";
+
 
 export default function Header({ selected }) {
 
-    const [anchorEl, setAnchorEl] = useState(null);
     const [openSidBar, setOpenSideBar] = useState(false);
     const IsPhone = useMediaQuery('(max-width:767px)');
-    // const IsPhone = useMediaQuery('(max-width:600px)');
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+
 
     return (
         <div style={
@@ -91,19 +85,15 @@ export default function Header({ selected }) {
                     }
                 }>
                     <Button
-                        variant={open ? "contained" : "text"}
-                        id="basic-button"
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-expanded={open ? 'true' : undefined}
-
+                        variant="text"
                     >
-                        {
-                            IsPhone
-                                ? <h4 style={{ fontWeight: "normal" }} >Connect</h4>
-                                : <h3 style={{ fontWeight: "bold" }} >Connect</h3>
-                        }
+                        <Link href="/Connect" style={{textDecoration:"none",color:"#2196f3"}}>
+                            {
+                                IsPhone
+                                    ? <h4 style={{ fontWeight: "normal" }} >Connect</h4>
+                                    : <h3 style={{ fontWeight: "bold" }} >Connect</h3>
+                            }
+                        </Link>
                     </Button>
                     <Button sx={{ backgroundColor: "#06D6A0", "&:hover": { backgroundColor: "#00F5D4" } }} variant="contained">
 
@@ -114,21 +104,7 @@ export default function Header({ selected }) {
                         }
                     </Button>
 
-                    <Menu
-                        sx={{ marginTop: "10px" }}
-                        id="basic-menu"
-                        open={open}
-                        onClose={handleClose}
-                        anchorEl={anchorEl}
 
-                    >
-                        <div style={{ height: "100px", maxHeight: "fit-content", width: "fit-content", padding: "10px", display: "flex", gap: "5px", alignItems: "center", flexWrap: "wrap" }}>
-                            <Button variant="outlined" id="test" sx={{ "&:hover": { transform: "translateY(-5px)", transition: "200ms" }, height: "fit-content" }}>LOGIN</Button>
-                            <Divider orientation="vertical" flexItem variant="fullWidth" >or</Divider>
-                            <Button variant="outlined" sx={{ "&:hover": { transform: "translateY(-5px)", transition: "200ms" }, height: "fit-content" }}>SINGUP</Button>
-                        </div>
-
-                    </Menu>
                 </div>
 
             </div>
