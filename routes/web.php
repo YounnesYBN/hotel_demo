@@ -32,3 +32,5 @@ Route::get('/Contact us', [ContactUsController::class,"index"]);
 Route::get('/Gallery',[GalleryController::class,"index"]);
 
 Route::get("/Connect",[ConnectController::class,"index"]);
+
+Route::post("/Singup",[ConnectController::class,"singup"]);

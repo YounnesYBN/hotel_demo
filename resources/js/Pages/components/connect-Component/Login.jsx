@@ -54,6 +54,7 @@ export default function Login({ IsSmallLaptop, IsSmallPhone, IsTablet }) {
                     helperText="enter your valid password"
                     onChange={(e) => PasswordChange(e)}
                     value={password}
+                    type='password'
                 />
                 <Button variant='contained' sx={{ width: IsSmallPhone ? "85%" : "50%" }}>Log in</Button>
             </form>

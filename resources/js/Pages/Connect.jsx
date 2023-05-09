@@ -7,10 +7,12 @@ import { Typography, useMediaQuery } from "@mui/material";
 import Login from './components/connect-Component/Login';
 import Singup from './components/connect-Component/Singup';
 
-
+const getSelectedPart =()=>{
+    return localStorage.getItem("selected");
+}
 
 export default function Connect() {
-    const [value, setValue] = useState("login");
+    const [value, setValue] = useState(getSelectedPart()==null?"login":getSelectedPart());
     const IsTablet = useMediaQuery('(max-width:767px)');
     const IsSmallPhone = useMediaQuery('(max-width:459px)');
     const IsMoreSmallPhone = useMediaQuery('(max-width:321px)');
@@ -19,6 +21,7 @@ export default function Connect() {
     const handleChange = (event, newValue) => {
 
         setValue(newValue);
+        localStorage.setItem("selected",newValue)
     };
 
     const tapStyle = {
