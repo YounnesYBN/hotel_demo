@@ -13,8 +13,10 @@ class ConnectController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
+        // Inertia::share("from",$request->from);
+        session(["from" => $request->from]);
         return Inertia::render("Connect");
     }
 
@@ -46,17 +48,47 @@ class ConnectController extends Controller
                 "username" => $newUser->name,
                 "id" => $newUser->id,
             ]);
+            Auth::login($newUser);
 
-            return redirect("/");
-        } 
+            return redirect(Inertia::getShared("From"));
+        }
     }
 
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
+        
+        Auth::logout();
         session()->forget([
-            "email","username","id"
+            "email", "username", "id","error","message"
         ]);
 
         return redirect()->back();
+    }
+
+    public function login(Request $request)
+    {
+
+        $request->validate([
+            "email" => ["required"],
+            "password" => ["required"],
+        ]);
+
+        $user = Auth::attempt(['email' => strtolower($request->email), 'password' => $request->password]);
+        
+
+        if ($user) {
+            session([
+                "error" => false,
+                "message" => "",
+            ]);
+            return redirect(Inertia::getShared("From"));
+        } else {
+            session([
+                "error" => true,
+                "message" => "email or password is not valid",
+            ]);
+            redirect()->back();
+        }
     }
 }

@@ -10,7 +10,6 @@ export default function Rooms({ AllRoomsPros }) {
     const IsSmallPhone = useMediaQuery('(max-width:459px)');
     const x = useMediaQuery('(min-width:1018px)');
 
-    console.log(AllRoomsPros);
 
     return (
         <div style={{ backgroundColor: "#efeff4" }}>

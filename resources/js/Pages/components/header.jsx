@@ -2,7 +2,7 @@ import { Button, Drawer, IconButton, useMediaQuery, Avatar, Menu, MenuItem, Typo
 import { useState } from "react";
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import NavBar from "./home-Component/navBar";
-import { Link, usePage, router } from "@inertiajs/react";
+import { usePage, router } from "@inertiajs/react";
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
@@ -13,9 +13,11 @@ export default function Header({ selected }) {
     const [openMenu, setOpenMenu] = useState(false);
     const [SnakeBarState, setSnakeBare] = useState({ open: false, message: "" })
     const [progresse, setProgresse] = useState(false)
-    const IsPhone = useMediaQuery('(max-width:767px)');
-    const smallLaptop = useMediaQuery('(max-width:1018px)');
-    const { user } = usePage().props.Auth
+    const IsPhone = useMediaQuery('(max-width:767px)')
+    const IsSmallPhone = useMediaQuery('(max-width:459px)');
+
+    const { auth } = usePage().props
+
     const handleClose = () => {
         setAnchorEl(null);
         setOpenMenu(false)
@@ -27,7 +29,7 @@ export default function Header({ selected }) {
     const OpenSnakeBar = (error, message) => {
         setSnakeBare({
             open: true, message: <Alert severity={error ? "error" : "success"} sx={{ display: "flex", alignItems: "center" }}>
-                {smallLaptop ? <h3 style={{ fontWeight: "normal" }}> {message}</h3> : <h1 style={{ fontWeight: "normal" }}> {message}</h1>}
+                <h3 style={{ fontWeight: "normal" }}> {message}</h3> 
             </Alert>
         })
     }
@@ -58,7 +60,7 @@ export default function Header({ selected }) {
 
         })
     }
-    console.log(user);
+    
     return (
         <div style={
             {
@@ -133,14 +135,14 @@ export default function Header({ selected }) {
                     }
                 }>
                     {
-                        user.email
+                        auth
                             ?   //on login
                             <>
                                 <IconButton onClick={(e) => {
                                     setAnchorEl(e.currentTarget)
                                     setOpenMenu(true)
                                 }}>
-                                    <Avatar />
+                                    <Avatar sx={IsSmallPhone?{ width: 30, height: 30 }:{}}/>
                                 </IconButton>
                                 {/* //--------------------------unifective code */}
                                 <Menu
@@ -153,12 +155,12 @@ export default function Header({ selected }) {
                                     }}
                                 >
                                     <MenuItem >
-                                        <Box sx={{ my: 1.5, px: 2.5 }} >
+                                        <Box sx={{}} >
                                             <Typography variant="subtitle2" noWrap>
-                                                {user.username}
+                                                {auth.name}
                                             </Typography>
                                             <Typography variant="body2" sx={{ color: 'gray' }} noWrap>
-                                                {user.email}
+                                                {auth.email}
 
                                             </Typography>
                                         </Box>
@@ -173,25 +175,31 @@ export default function Header({ selected }) {
                             : //on not login
                             <Button
                                 variant="text"
+                                onClick={() => {
+                                    router.get("/Connect", { from: location.pathname })
+                                }}
                             >
-                                <Link href="/Connect" style={{ textDecoration: "none", color: "#2196f3" }}>
-                                    {
-                                        IsPhone
-                                            ? <h4 style={{ fontWeight: "normal" }} >Connect</h4>
-                                            : <h3 style={{ fontWeight: "bold" }} >Connect</h3>
-                                    }
-                                </Link>
+
+                                {
+                                    IsPhone
+                                        ? <h4 style={{ fontWeight: "normal" }} >Connect</h4>
+                                        : <h3 style={{ fontWeight: "bold" }} >Connect</h3>
+                                }
+
                             </Button>
                     }
                     <Button sx={{ backgroundColor: "#06D6A0", "&:hover": { backgroundColor: "#00F5D4" } }} variant="contained">
 
                         {
                             IsPhone
-                                ? <h4 style={{ fontWeight: "normal" }} >Book now !</h4>
+                                ? <h5 style={{ fontWeight: "normal" }} >Book now !</h5>
                                 : <h3 style={{ fontWeight: "bold" }} >Book now !</h3>
                         }
                     </Button>
 
+                        {
+                            
+                        }
 
                 </div>
 

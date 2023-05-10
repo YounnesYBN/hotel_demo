@@ -20,23 +20,26 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [HomeController::class,"index"]);
+Route::get('/', [HomeController::class, "index"]);
 
 
 
-Route::get('/About us',[AboutUsController::class,"index"]);
+Route::get('/About us', [AboutUsController::class, "index"]);
 
-Route::get('/Rooms', [RoomController::class,"index"]);
+Route::get('/Rooms', [RoomController::class, "index"]);
 
-Route::get('/Contact us', [ContactUsController::class,"index"]);
+Route::get('/Contact us', [ContactUsController::class, "index"]);
 
-Route::get('/Gallery',[GalleryController::class,"index"]);
-
-
+Route::get('/Gallery', [GalleryController::class, "index"]);
 
 
-Route::get("/Connect",[ConnectController::class,"index"]);
 
-Route::post("/Singup",[ConnectController::class,"singup"]);
 
-Route::get("/Logout",[ConnectController::class,"logout"]);
+Route::get("/Connect", [ConnectController::class, "index"]);
+
+
+Route::post("/Singup", [ConnectController::class, "singup"]);
+
+Route::get("/Logout", [ConnectController::class, "logout"]);
+
+Route::post("/Login",[ConnectController::class,"login"]);
