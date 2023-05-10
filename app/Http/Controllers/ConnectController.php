@@ -50,4 +50,13 @@ class ConnectController extends Controller
             return redirect("/");
         } 
     }
+
+
+    public function logout(Request $request){
+        session()->forget([
+            "email","username","id"
+        ]);
+
+        return redirect()->back();
+    }
 }

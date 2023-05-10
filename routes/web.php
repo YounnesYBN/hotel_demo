@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ConnectController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomController;
@@ -31,6 +32,11 @@ Route::get('/Contact us', [ContactUsController::class,"index"]);
 
 Route::get('/Gallery',[GalleryController::class,"index"]);
 
+
+
+
 Route::get("/Connect",[ConnectController::class,"index"]);
 
 Route::post("/Singup",[ConnectController::class,"singup"]);
+
+Route::get("/Logout",[ConnectController::class,"logout"]);

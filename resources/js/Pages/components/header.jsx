@@ -1,8 +1,8 @@
-import { Button, Drawer, IconButton, useMediaQuery, Avatar, Menu, MenuItem, Typography, Box, Divider } from "@mui/material";
+import { Button, Drawer, IconButton, useMediaQuery, Avatar, Menu, MenuItem, Typography, Box, Divider, Snackbar, Alert, CircularProgress } from "@mui/material";
 import { useState } from "react";
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import NavBar from "./home-Component/navBar";
-import { Link, usePage } from "@inertiajs/react";
+import { Link, usePage, router } from "@inertiajs/react";
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
@@ -11,13 +11,54 @@ export default function Header({ selected }) {
     const [openSidBar, setOpenSideBar] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
+    const [SnakeBarState, setSnakeBare] = useState({ open: false, message: "" })
+    const [progresse, setProgresse] = useState(false)
     const IsPhone = useMediaQuery('(max-width:767px)');
+    const smallLaptop = useMediaQuery('(max-width:1018px)');
     const { user } = usePage().props.Auth
     const handleClose = () => {
         setAnchorEl(null);
         setOpenMenu(false)
     };
 
+    const CloseSnakeBar = () => {
+        setSnakeBare({ open: false, message: "" })
+    }
+    const OpenSnakeBar = (error, message) => {
+        setSnakeBare({
+            open: true, message: <Alert severity={error ? "error" : "success"} sx={{ display: "flex", alignItems: "center" }}>
+                {smallLaptop ? <h3 style={{ fontWeight: "normal" }}> {message}</h3> : <h1 style={{ fontWeight: "normal" }}> {message}</h1>}
+            </Alert>
+        })
+    }
+    const OnLogout = () => {
+        router.get('/Logout', {
+
+        }, {
+            preserveScroll: true,
+            preserveState: true,
+            onStart: () => {
+                setProgresse(true)
+            },
+            onFinish: () => {
+                setProgresse(true)
+                handleClose()
+            },
+            onSuccess: () => {
+                OpenSnakeBar(false, "you logout successfully")
+                setProgresse(true)
+
+            },
+            onError: () => {
+                OpenSnakeBar(true, "something went wrong")
+                setProgresse(true)
+
+
+            }
+
+        })
+    }
+    console.log(user);
     return (
         <div style={
             {
@@ -111,7 +152,7 @@ export default function Header({ selected }) {
                                         'aria-labelledby': 'basic-button',
                                     }}
                                 >
-                                    <MenuItem onClick={handleClose}>
+                                    <MenuItem >
                                         <Box sx={{ my: 1.5, px: 2.5 }} >
                                             <Typography variant="subtitle2" noWrap>
                                                 {user.username}
@@ -122,9 +163,9 @@ export default function Header({ selected }) {
                                             </Typography>
                                         </Box>
                                     </MenuItem>
-                                    <Divider sx={{ borderStyle: 'dashed', backgroundColor: "rgb(239, 239, 244)" }} variant="middle"/>
-                                    <MenuItem sx={{display:"flex",justifyContent:"center",gap:"5%"}}>
-                                        Logout <LogoutIcon color="error"/>
+                                    <Divider sx={{ borderStyle: 'dashed', backgroundColor: "rgb(239, 239, 244)" }} variant="middle" />
+                                    <MenuItem onClick={OnLogout} disabled={progresse} sx={{ display: "flex", justifyContent: "center", gap: "5%" }}>
+                                        {progresse ? <CircularProgress /> : <> Logout <LogoutIcon color="error" fontSize="2rem" /> </>}
                                     </MenuItem>
 
                                 </Menu>
@@ -170,7 +211,14 @@ export default function Header({ selected }) {
                 )
             }
 
-
+            {/* //-----------------------unEffective code--------- */}
+            <Snackbar
+                open={SnakeBarState.open}
+                autoHideDuration={3000}
+                onClose={CloseSnakeBar}
+            >
+                {SnakeBarState.message}
+            </Snackbar>
 
 
         </div >
