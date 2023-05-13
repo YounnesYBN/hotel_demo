@@ -1,6 +1,6 @@
 import Header from "./components/header"
 import { Typography, useMediaQuery } from "@mui/material";
-import { Link } from "@inertiajs/react";
+import { Link,router } from "@inertiajs/react";
 import { ArrowBackIosRounded } from "@mui/icons-material";
 import Footer from "./components/footer";
 import { Carousel, Image } from "grommet"
@@ -67,7 +67,7 @@ export default function Rooms({ AllRoomsPros }) {
                         {
                             AllRoomsPros.map((roomItem, index) => {
                                 return (
-                                    <Link style={{ textDecoration: "none", margin: IsTablet ? "0 20px 0 20px" : null }}>
+                                    <Link href={`Rooms/${roomItem.id_room}`} preserveScroll preserveState style={{ textDecoration: "none", margin: IsTablet ? "0 20px 0 20px" : null }}>
                                         <div key={index} className="roomCard" style={                        //component room
                                             {
                                                 width: IsTablet ? "100%" : "357px",

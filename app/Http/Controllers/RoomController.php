@@ -44,9 +44,22 @@ class RoomController extends Controller
     /**
      * Display the resource.
      */
-    public function show()
+    public function show($id)
     {
         //
+        $room = Room::where("id_room",$id)->first();
+        if($room){
+
+            $room->gallery = array_map(function($photo){
+                return asset("storage/rooms/".$photo["image_name"]);
+            },$room->rooms_gallery()->get()->toarray());
+            
+            return Inertia::render("ShowRoom",[
+                "info"=>$room
+            ]);
+        }else{
+            return redirect("Rooms");
+        }
     }
 
     /**

@@ -11,7 +11,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import LocalHotelRoundedIcon from '@mui/icons-material/LocalHotelRounded';
 import "leaflet/dist/leaflet.css";
 import Footer from "./components/footer";
-import { Link,usePage } from "@inertiajs/react";
+import { Link, usePage,router } from "@inertiajs/react";
 
 
 const SpliteArray = (x) => {
@@ -34,7 +34,7 @@ export default function Home({ imgs, galeries, rooms }) {
     const IsLessThen470 = useMediaQuery('(max-width:459px)');
     const x = useMediaQuery('(min-width:1018px)');
     const ContactBreakingPoint = useMediaQuery("(max-width:1182px)")
-    const {Auth} = usePage().props
+    const { Auth } = usePage().props
     const isSmallAboutUs = IsPhone ? {
         backgroundColor: "white",
         borderRadius: "5px",
@@ -74,7 +74,7 @@ export default function Home({ imgs, galeries, rooms }) {
         setImgBackDrop(false);
     }
 
-    
+
     return (
         <div>
             <Header selected={"HOME"} />
@@ -181,7 +181,12 @@ export default function Home({ imgs, galeries, rooms }) {
                         {
                             rooms.map((room, index) => {
                                 return (
-                                    <Tab key={index} label={(
+                                    <Tab onClick={()=>{
+                                        router.get(`/Rooms/${room.id_room}`,{},{
+                                            preserveScroll:true,
+                                            preserveState:true,
+                                        })
+                                    }} key={index} label={(
                                         <Card>
                                             <CardMedia
                                                 component={"img"}
